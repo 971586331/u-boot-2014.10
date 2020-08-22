@@ -45,6 +45,9 @@ static struct ctrl_dev *cdev = (struct ctrl_dev *)CTRL_DEVICE_BASE;
  */
 static int read_eeprom(struct am335x_baseboard_id *header)
 {
+#if 1
+	strcpy(header->name, "BB_Black_V1.6");
+#else
 	/* Check if baseboard eeprom is available */
 	if (i2c_probe(CONFIG_SYS_I2C_EEPROM_ADDR)) {
 		puts("Could not probe the EEPROM; something fundamentally "
@@ -78,6 +81,8 @@ static int read_eeprom(struct am335x_baseboard_id *header)
 			return -EINVAL;
 		}
 	}
+
+#endif
 
 	return 0;
 }
@@ -371,7 +376,7 @@ const struct dpll_params *get_dpll_ddr_params(void)
 	if (read_eeprom(&header) < 0)
 		puts("Could not get board ID.\n");
 
-	if (board_is_evm_sk(&header))
+	if (board_is_BB_Black(&header) || board_is_evm_sk(&header))
 		return &dpll_ddr_evm_sk;
 	else if (board_is_bone_lt(&header))
 		return &dpll_ddr_bone_black;
@@ -456,7 +461,7 @@ void sdram_init(void)
 		gpio_direction_output(GPIO_DDR_VTT_EN, 1);
 	}
 
-	if (board_is_evm_sk(&header))
+	if (board_is_BB_Black(&header) || board_is_evm_sk(&header))
 		config_ddr(303, &ioregs_evmsk, &ddr3_data,
 			   &ddr3_cmd_ctrl_data, &ddr3_emif_reg_data, 0);
 	else if (board_is_bone_lt(&header))

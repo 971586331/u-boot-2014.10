@@ -90,11 +90,13 @@ int fat_register_device(block_dev_desc_t *dev_desc, int part_no)
 
 	/* Read the partition table, if present */
 	if (get_partition_info(dev_desc, part_no, &info)) {
+        /*
 		if (part_no != 0) {
 			printf("** Partition %d not valid on device %d **\n",
 					part_no, dev_desc->dev);
 			return -1;
 		}
+        */
 
 		info.start = 0;
 		info.size = dev_desc->lba;
@@ -1251,7 +1253,7 @@ int fat_size(const char *filename)
 long file_fat_read_at(const char *filename, unsigned long pos, void *buffer,
 		      unsigned long maxsize)
 {
-	printf("reading %s\n", filename);
+	debug("reading %s\n", filename);
 	return do_fat_read_at(filename, pos, buffer, maxsize, LS_NO, 0);
 }
 

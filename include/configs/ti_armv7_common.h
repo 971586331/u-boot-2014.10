@@ -17,6 +17,10 @@
 #ifndef __CONFIG_TI_ARMV7_COMMON_H__
 #define __CONFIG_TI_ARMV7_COMMON_H__
 
+#if defined(CONFIG_SPL_OS_BOOT_ENABLE)
+#define CONFIG_SPL_OS_BOOT
+#endif
+
 /* Common define for many platforms. */
 #define CONFIG_OMAP
 #define CONFIG_OMAP_COMMON
