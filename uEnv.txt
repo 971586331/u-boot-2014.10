@@ -1,0 +1,4 @@
+
+fdtfile=am335x-evm.dtb;
+
+uenvcmd=load mmc 0 0x88000000 /boot/am335x-evm.dtb;load mmc 0 0x82000000 /boot/zImage;run mmcargs;bootz 0x82000000 - 0x88000000;
